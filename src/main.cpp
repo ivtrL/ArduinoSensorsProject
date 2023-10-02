@@ -34,6 +34,7 @@ void setup() {
 }
 
 void loop() {
+  digitalWrite(ledPin, LOW);
   rfidRead();
   ultrasonicRead();
   pirRead();
@@ -47,8 +48,6 @@ void ultrasonicRead() {
   Serial.println(" cm");
   if (distance < 20) {
     digitalWrite(ledPin, HIGH);
-  } else {
-    digitalWrite(ledPin, LOW);
   }
 }
 
@@ -80,7 +79,6 @@ void rfidRead() {
     Serial.println();
   } else {
     Serial.println("Negado!");
-    digitalWrite(ledPin, LOW);
   }
 }
 
@@ -90,6 +88,5 @@ void pirRead() {
     digitalWrite(ledPin, HIGH);
   } else {
     Serial.println("Nenhum movimento detectado!");
-    digitalWrite(ledPin, LOW);
   }
 }
