@@ -29,17 +29,17 @@ void setup() {
 }
 
 void loop() {
-  ultrasonicRead();
   rfidRead();
+  ultrasonicRead();
   pirRead();
   delay(2000);
 }
 
-// put function definitions here:
 void ultrasonicRead() {
-  int distance = ultrasonic.read();
+  int distance = ultrasonic.read(CM);
   Serial.print("Distance: ");
-  Serial.println(distance);
+  Serial.print(distance);
+  Serial.println(" cm");
   if (distance < 20) {
     digitalWrite(ledPin, HIGH);
   } else {
@@ -48,11 +48,15 @@ void ultrasonicRead() {
 }
 
 void rfidRead() {
-  if (!mfrc522.PICC_IsNewCardPresent()) 
+  if (!mfrc522.PICC_IsNewCardPresent()) {
+    Serial.println("No card present");
     return;
+  }
   
-  if (!mfrc522.PICC_ReadCardSerial()) 
+  if (!mfrc522.PICC_ReadCardSerial()) {
+    Serial.println("Read failed");
     return;
+  }
 
   Serial.print("UID tag :");
   String content = "";
