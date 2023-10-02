@@ -34,11 +34,11 @@ void setup() {
 }
 
 void loop() {
+  delay(2000);
   digitalWrite(ledPin, LOW);
   rfidRead();
   ultrasonicRead();
   pirRead();
-  delay(2000);
 }
 
 void ultrasonicRead() {
