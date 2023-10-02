@@ -5,6 +5,11 @@
 // PIR Sensor
 constexpr uint8_t PIRPin = 5;
 // RFID Sensor
+/* Other Pins:
+MOSI 11,
+MISO 12, 
+SCK 13
+*/
 constexpr uint8_t SDAPin = 10;
 constexpr uint8_t RSTPin = 9;
 // Ultrasonic Sensor
@@ -49,12 +54,12 @@ void ultrasonicRead() {
 
 void rfidRead() {
   if (!mfrc522.PICC_IsNewCardPresent()) {
-    Serial.println("No card present");
+    Serial.println("Nenhuma Etiqueta Detectada");
     return;
   }
   
   if (!mfrc522.PICC_ReadCardSerial()) {
-    Serial.println("Read failed");
+    Serial.println("Falha na leitura");
     return;
   }
 
@@ -67,24 +72,24 @@ void rfidRead() {
     content.concat(String(mfrc522.uid.uidByte[i], HEX));
   } 
   Serial.println();
-  Serial.print("Message : ");
+  Serial.print("Acesso: ");
   content.toUpperCase();
   if (content.substring(1) == "E5 81 92 AC") {
-    Serial.println("Authorized access");
+    Serial.println("Autorizado!");
     digitalWrite(ledPin, HIGH);
     Serial.println();
   } else {
-    Serial.println(" Access denied");
+    Serial.println("Negado!");
     digitalWrite(ledPin, LOW);
   }
 }
 
 void pirRead() {
   if (digitalRead(PIRPin) == HIGH) {
-    Serial.println("Motion detected!");
+    Serial.println("Movimento detectado!");
     digitalWrite(ledPin, HIGH);
   } else {
-    Serial.println("No Motion detected!");
+    Serial.println("Nenhum movimento detectado!");
     digitalWrite(ledPin, LOW);
   }
 }
